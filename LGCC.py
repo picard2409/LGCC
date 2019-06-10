@@ -9,23 +9,27 @@ class Lgcc():
         cn=np.zeros(no)
         cn[1]=1
         z=1
-        for i in range(1,n+1):
+        for i in range(1,n):
             z=z*(i-0.5)/i
             cn[i+1]=z
-        mlc=np.zeros(no,no)
-        for j in range(0,n+1):
-            for i in range(0.j/2):
+        mlc=np.zeros((no,no))
+        for j in range(0,n):
+            tmp=np.floor(j/2)
+            tmp=tmp.astype(np.int)
+            for i in range(0,+1):
                 mlc[j-2*i,j]=2*cn[j-i]
-        mlc=(n,n)=2.0*mlc(n,n)
+        mlc[n,n]=2.0*mlc[n,n]
         return mlc
 
     def hcm(self,n,mlc):
-        mhc=np.zeros(n+1,n+1)
-        mhc=mlc[:,2:n+1]-mlc[:,0:n-1]
+        mhc=np.zeros((n+1,n+1))
+        mhc[:,2:n+1]=mlc[:,2:n+1]-mlc[:,0:n-1]
         mhc[0:1,0]=mlc[0:1,0]
         mhc[0:1,1]=mlc[0:1,0]+mlc[0:1,1]
         return mhc
-    # def cheb(self,N):
+
+
+            # def cheb(self,N):
     #     if N==0:
     #         D=0
     #         x=1
@@ -40,7 +44,7 @@ class Lgcc():
     #     return x,D
 
     def f2ph(self,f,lc,gmi,n):
-        fl=np.multiply(utuh(f,lc),gmi)
+        fl=np.multiply(self.utuh(f,lc),gmi)
         z=np.array([[fl[0]-fl[1]]/2,[fl[0]]+fl[1]]/2)
         tmp=fl[2:n+1]-fl[0:n-1]
         gh=np.vstack((z,tmp))
@@ -49,13 +53,13 @@ class Lgcc():
 
     def Ini(self,xb,n):
         scl=2/(xb[1]-xb[0])
-        lc=lcm(n)
-        hc=hcm(n,lc)
+        lc=self.lcm(n)
+        hc=self.hcm(n,lc)
         #D,xc=cheb(n)
-        xc=np.cos(np.pi/n*np.range(n,-1,-1))
+        xc=np.cos(np.pi/n*np.arange(n,-1,-1))
         xc=np.transpose(xc)
 
-        x=xb(1)+(xc+1)/scl
+        x=xb[1]+(xc+1)/scl
         return lc,hc,x,scl
 
     def InitializeMK(self,n,scl):
