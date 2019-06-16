@@ -16,7 +16,7 @@ import sympy
 # # print(s1,s2,s)
 # # D=np.diag(s1)
 # # print(D)
-# # S=np.array([[1,2],[2,3]])
+# # S=np.array([[1,2],[2,3]])                                                                                                                                                                            
 # # print(S)
 # #数组的垂直和并
 # a=np.array([1,3])
